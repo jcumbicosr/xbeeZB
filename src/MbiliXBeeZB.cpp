@@ -602,6 +602,7 @@ uint8_t MbiliXBeeZB::sendXBeePriv(struct packetXBee* packet)
         
         // set Frame Type
         TX[3]=0x10; 
+		TX[4]=0x01; 
         tipo=18;
 		
 		if(packet->mode==BROADCAST)
