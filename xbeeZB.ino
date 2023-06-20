@@ -13,7 +13,9 @@ void setup() {
   Serial.begin(9600);
   Serial.println(F("Receiving BROADCAST packets example"));
 
-  xbeeZB.init();
+  xbeeZB.ON();
+  // 1.1. it is supposed that XBee SM=1 (Pin hibernate)
+  xbeeZB.wake();
 }
 
 void loop() {
@@ -48,6 +50,23 @@ void loop() {
     PrintHex8( xbeeZB._srcMAC[7] );
     Serial.println();    
     Serial.println(F("--------------------------------"));
+
+    if( xbeeZB._payload[0] == 'S' &&
+        xbeeZB._payload[1] == 'L' &&
+        xbeeZB._payload[2] == 'P' ){
+          // 1.1. put XBee to sleep
+          xbeeZB.sleep();  
+          Serial.println(F("1. XBee in sleep mode"));
+          /**********************************
+          // 1.2. wait 20 seconds in sleep mode  
+          Serial.println(F("While XBee is in sleep mode --> wait for 20 seconds...\n"));
+          delay(20000);
+
+          // 2.1. wake XBee up
+          xbeeZB.wake();  
+          Serial.println(F("2. XBee wakes-up"));
+          ***********************************/
+        }
   }  
   else
   {
@@ -84,7 +103,6 @@ void loop() {
     Serial.println(F("send error"));
   }
   
-
 }
 
 void PrintHex8(uint8_t data) // prints 8-bit data in hex with leading zeroes

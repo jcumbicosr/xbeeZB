@@ -6,12 +6,12 @@ It initalizes all the necessary variables
 \param uint32_t _uartb : specifies the uart rate 
 \return void
  */
-void MbiliXBeeZB::init()
+void MbiliXBeeZB::ON()
 {
-	return init(9600);
+	return ON(9600);
 }
 
-void MbiliXBeeZB::init( uint32_t _uartb)
+void MbiliXBeeZB::ON( uint32_t _uartb)
 {
 	Serial1.begin(_uartb);
 	delay(270);
@@ -1024,6 +1024,33 @@ int8_t MbiliXBeeZB::receivePacketTimeout( uint32_t timeout)
 	
 	return 0;
 	
+}
+
+/*
+ Function: Wake up XBee, de-asserting PIN 9
+ Returns: void
+*/
+void MbiliXBeeZB::wake()
+{
+
+    pinMode(BEEDTR, OUTPUT);
+    digitalWrite(BEEDTR, LOW);
+    
+	Serial1.begin(9600);
+
+    delay(50);
+}
+
+/*
+ Function: Set XBee to sleep, asserting PIN 9
+ Returns: void
+*/
+void MbiliXBeeZB::sleep()
+{
+	// set sleep pin high in D23
+	pinMode(BEEDTR, OUTPUT);
+   	digitalWrite(BEEDTR, HIGH);
+
 }
 	
 MbiliXBeeZB	xbeeZB = MbiliXBeeZB();

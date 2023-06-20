@@ -267,9 +267,9 @@ public:
 	\param uint32_t _uartb : specifies the uart rate 
 	\return void
 	 */
-	void init();
+	void ON();
 	
-	void init(uint32_t _uartb);
+	void ON(uint32_t _uartb);
 	
 	/*
 	* Function: Converts a string to an hex number
@@ -405,6 +405,18 @@ public:
 		'0' --> OK: The command has been executed with no errors
      */
     int8_t receivePacketTimeout( uint32_t timeout);
+	
+	//! It wakes up the XBee, de-asserting PIN 9
+  	/*!
+    \return void
+     */
+    void wake();
+	
+	//! It sets the XBee to sleep, asserting PIN 9
+  	/*!
+    \return void
+     */
+    void sleep();
 	
 	
 	/// Attributes /////////////////////////////////////////////////////////////
