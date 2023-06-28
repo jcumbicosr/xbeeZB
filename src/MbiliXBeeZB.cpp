@@ -28,6 +28,49 @@ void MbiliXBeeZB::ON( uint32_t _uartb)
 }
 
 /*
+ * It converts a hexadecimal number stored in an array to a string (8 Byte 
+ * numbers). This function is used by the XBee module library in order to 
+ * convert mac addresses
+ * 
+ */
+void MbiliXBeeZB::hex2str(uint8_t* number, char* macDest)
+{
+	hex2str(number,macDest,8);
+}
+
+/*
+ * It converts a hexadecimal number stored in an array to a string (length is an 
+ * input parameter). This function is used by the XBee module library in order to 
+ * convert mac addresses
+ * 
+ */
+void MbiliXBeeZB::hex2str(uint8_t* number, char* macDest, uint8_t length)
+{
+	uint8_t aux_1=0;
+	uint8_t aux_2=0;
+
+	for(int i=0;i<length;i++)
+	{
+		aux_1=number[i]/16;
+		aux_2=number[i]%16;
+		if (aux_1<10)
+		{
+			macDest[2*i]=aux_1+'0';
+		}
+		else{
+			macDest[2*i]=aux_1+('A'-10);
+		}
+		if (aux_2<10){
+			macDest[2*i+1]=aux_2+'0';
+		}
+		else{
+			macDest[2*i+1]=aux_2+('A'-10);
+		}
+	} 
+	macDest[length*2]='\0';
+}
+
+/*
  * Function: Converts a string to an hex number
  * 
  */
@@ -766,6 +809,45 @@ uint8_t MbiliXBeeZB::sendXBee(struct packetXBee* packet)
 	
 	return error;
 }
+
+
+/*
+ * Function: Send a packet from one XBee to another XBee in API mode
+ * This function performs application-level retries.
+ * This function is only used for 64-bit addressing.
+ *
+ * return:
+ * 	'0' OK
+ * 	'1' error
+ */
+uint8_t MbiliXBeeZB::send( uint8_t* macAddress, char* data )
+{
+	return send( 	(uint8_t*)macAddress,
+					(uint8_t*)data,
+					(uint16_t)strlen(data) );
+}
+
+
+/*
+ * Function: Send a packet from one XBee to another XBee in API mode
+ * This function performs application-level retries.
+ * This function is only used for 64-bit addressing.
+ *
+ * return:
+ * 	'0' OK
+ * 	'1' error
+ */
+uint8_t MbiliXBeeZB::send( uint8_t* macAddress, uint8_t* pointer, uint16_t length )
+{
+	// define buffer to translate from hex array to string
+	char macAddress_str[20]={};
+
+	hex2str( (uint8_t*)macAddress, (char*)macAddress_str, 8);
+
+	return send( macAddress_str, pointer, length );
+}
+
+
 
 /*
  * Function: Send a packet from one XBee to another XBee in API mode

@@ -271,6 +271,25 @@ public:
 	
 	void ON(uint32_t _uartb);
 	
+	//! It converts a hexadecimal number stored in an array to a string (8 Byte numbers)
+	/*!
+	\param uint8_t* number : hexadecimal array to conver to a string
+	\param const char* macDest : char array where the converted number is stored
+	\return void
+	\sa long2array(long num, char* numb), str2hex(char* str), str2hex(uint8_t* str)
+	*/
+	void hex2str(uint8_t* number, char* macDest);
+
+	//! It converts a hexadecimal number stored in an array to a string (8 Byte numbers)
+	/*!
+	\param uint8_t* number : hexadecimal array to conver to a string
+	\param const char* macDest : char array where the converted number is stored
+	\param uint8_t length : length to copy
+	\return void
+	\sa long2array(long num, char* numb), str2hex(char* str), str2hex(uint8_t* str)
+	*/
+	void hex2str(uint8_t* number, char* macDest, uint8_t length);
+
 	/*
 	* Function: Converts a string to an hex number
 	*/
@@ -312,6 +331,10 @@ public:
     \return '0' on success, '1' error
      */
 	uint8_t send( char* macAddress, uint8_t* pointer, uint16_t length );
+	
+	//! It sends a packet from one XBee to another XBee in API mode
+	uint8_t send( uint8_t* macAddress, char* data );
+	uint8_t send( uint8_t* macAddress, uint8_t* pointer, uint16_t length );
 	
 	//! It gets the TX frame checksum
   	/*!
