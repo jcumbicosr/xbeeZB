@@ -22,16 +22,27 @@ A comprehensive Arduino library for communicating with XBee ZigBee modules using
 
 ## Installation
 
+### Arduino IDE
+
+1. Download the library as a ZIP file from GitHub
+2. In Arduino IDE, go to **Sketch > Include Library > Add .ZIP Library**
+3. Select the downloaded ZIP file
+4. The library will be installed and ready to use
+
+### Manual Installation
+
 1. Download or clone this repository
-2. Copy the `src/` folder contents to your Arduino libraries folder
-3. Include the library in your Arduino sketch: `#include "src/MbiliXBeeZB.h"`
+2. Copy the `xbeeZB` folder to your Arduino libraries directory:
+   - Windows: `Documents\Arduino\libraries\`
+   - macOS: `~/Documents/Arduino/libraries/`
+   - Linux: `~/Arduino/libraries/`
 
 ## Usage
 
 ### Basic Setup
 
 ```cpp
-#include "src/MbiliXBeeZB.h"
+#include <MbiliXBeeZB.h>
 
 // Define destination address (broadcast example)
 char RX_ADDRESS[] = "000000000000FFFF";
@@ -175,17 +186,16 @@ Received Signal Strength Indicator of the last packet.
 
 ## Example Projects
 
-### Broadcast Receiver
-The included `xbeeZB.ino` demonstrates:
-- Receiving broadcast packets
-- Displaying packet information (data, length, source MAC)
-- Conditional sleep/wake based on received data
-- Sending response packets
+1. **receive_send_packet**: Demonstrates:
+    - Receiving broadcast packets
+    - Displaying packet information (data, length, source MAC)
+    - Conditional sleep/wake based on received data
+    - Sending response packets
 
-### Key Features in Example
-- Broadcast address: `000000000000FFFF`
-- Sleep trigger: Receiving "SLP" command
-- Automatic response sending
+    **Key Features in Example**  
+        - Broadcast address: `000000000000FFFF`  
+        - Sleep trigger: Receiving "SLP" command  
+        - Automatic response sending
 
 ## Configuration
 
