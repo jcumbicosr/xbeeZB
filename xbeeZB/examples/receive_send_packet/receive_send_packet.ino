@@ -1,4 +1,4 @@
-#include "src/MbiliXBeeZB.h"
+#include <MbiliXBeeZB.h>
 
 // Define BROADCAST MAC address
 //////////////////////////////////////////
